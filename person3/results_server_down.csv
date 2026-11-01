@@ -1,0 +1,4 @@
+experiment,round,server,host,port,success,response_time_ms,response_bytes,throughput_bytes_per_sec,error
+server_down,1,Server1,127.0.0.1,5999,False,0.256,0,0,[Errno 111] Connection refused
+server_down,2,Server1,127.0.0.1,5999,False,0.224,0,0,[Errno 111] Connection refused
+server_down,3,Server1,127.0.0.1,5999,False,0.446,0,0,[Errno 111] Connection refused

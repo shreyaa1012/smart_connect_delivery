@@ -1,0 +1,6 @@
+experiment,round,server,host,port,success,response_time_ms,response_bytes,throughput_bytes_per_sec,error
+normal,1,Server1,127.0.0.1,5001,True,0.993,41,41285.78,
+normal,2,Server1,127.0.0.1,5001,True,1.052,41,38955.61,
+normal,3,Server1,127.0.0.1,5001,True,1.7,41,24122.543,
+normal,4,Server1,127.0.0.1,5001,True,1.399,41,29304.113,
+normal,5,Server1,127.0.0.1,5001,True,1.208,41,33948.098,
