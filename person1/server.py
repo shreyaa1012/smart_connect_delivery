@@ -1,3 +1,4 @@
+
 import socket
 import sys
 import threading
@@ -11,38 +12,57 @@ PORT = int(sys.argv[2])
 def handle_client(client_socket, client_address):
     print("Client connected:", client_address)
 
-    request = client_socket.recv(1024).decode()
+    try:
+        client_socket.settimeout(5)
 
-    print("Client requested:", request)
+        request = client_socket.recv(1024).decode().strip()
 
-    content_repository = {
-        "file1": "This is the content of file1 from " + SERVER_NAME,
-        "file2": "This is the content of file2 from " + SERVER_NAME,
-        "file3": "This is the content of file3 from " + SERVER_NAME
-    }
+        if not request:
+            print("Empty request from:", client_address)
+            return
 
-    if request == "HEALTH":
-        response = SERVER_NAME + " is healthy."
+        print("Client requested:", request)
 
-    elif request.startswith("GET "):
-        content_name = request[4:]
+        content_repository = {
+            "file1": "This is the content of file1 from " + SERVER_NAME,
+            "file2": "This is the content of file2 from " + SERVER_NAME,
+            "file3": "This is the content of file3 from " + SERVER_NAME
+        }
 
-        if content_name in content_repository:
-            response = content_repository[content_name]
+        if request == "HEALTH":
+            response = SERVER_NAME + " is healthy."
+
+        elif request.startswith("GET "):
+            content_name = request[4:].strip()
+
+            if content_name in content_repository:
+                response = content_repository[content_name]
+            else:
+                response = "Content not found."
+
         else:
-            response = "Content not found."
+            response = "Invalid request."
 
-    else:
-        response = "Invalid request."
+        client_socket.sendall(response.encode())
 
-    client_socket.send(response.encode())
+        print("Client served:", client_address)
 
-    client_socket.close()
+    except socket.timeout:
+        print("Client request timed out:", client_address)
 
-    print("Client served:", client_address)
+    except (ConnectionResetError, BrokenPipeError):
+        print("Client disconnected unexpectedly:", client_address)
+
+    except Exception as error:
+        print("Error handling client:", error)
+
+    finally:
+        client_socket.close()
 
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 server_socket.bind((HOST, PORT))
 
@@ -52,13 +72,20 @@ print(SERVER_NAME, "is running...")
 print("Listening on port:", PORT)
 print("Waiting for clients...")
 
+try:
+    while True:
+        client_socket, client_address = server_socket.accept()
 
-while True:
-    client_socket, client_address = server_socket.accept()
+        client_thread = threading.Thread(
+            target=handle_client,
+            args=(client_socket, client_address)
+        )
 
-    client_thread = threading.Thread(
-        target=handle_client,
-        args=(client_socket, client_address)
-    )
+        client_thread.start()
 
-    client_thread.start()
+except KeyboardInterrupt:
+    print("\nShutting down", SERVER_NAME)
+
+finally:
+    server_socket.close()
+    print("Server socket closed.")
