@@ -1,0 +1,11 @@
+experiment,round,server,host,port,success,response_time_ms,response_bytes,throughput_bytes_per_sec,error
+server_failure,1,Server1,10.0.0.2,5001,True,29.324,41,1398.163,
+server_failure,1,Server2,10.0.0.3,5002,False,14.834,0,0,[Errno 111] Connection refused
+server_failure,2,Server1,10.0.0.2,5001,True,28.684,41,1429.369,
+server_failure,2,Server2,10.0.0.3,5002,False,13.266,0,0,[Errno 111] Connection refused
+server_failure,3,Server1,10.0.0.2,5001,True,29.474,41,1391.069,
+server_failure,3,Server2,10.0.0.3,5002,False,13.569,0,0,[Errno 111] Connection refused
+server_failure,4,Server1,10.0.0.2,5001,True,29.726,41,1379.264,
+server_failure,4,Server2,10.0.0.3,5002,False,13.809,0,0,[Errno 111] Connection refused
+server_failure,5,Server1,10.0.0.2,5001,True,28.351,41,1446.141,
+server_failure,5,Server2,10.0.0.3,5002,False,13.612,0,0,[Errno 111] Connection refused

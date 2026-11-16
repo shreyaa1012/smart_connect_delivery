@@ -1,0 +1,11 @@
+experiment,round,server,host,port,success,response_time_ms,response_bytes,throughput_bytes_per_sec,error
+recovery,1,Server1,10.0.0.2,5001,True,29.293,41,1399.672,
+recovery,1,Server2,10.0.0.3,5002,True,29.547,41,1387.615,
+recovery,2,Server1,10.0.0.2,5001,True,29.118,41,1408.084,
+recovery,2,Server2,10.0.0.3,5002,True,29.602,41,1385.049,
+recovery,3,Server1,10.0.0.2,5001,True,29.707,41,1380.131,
+recovery,3,Server2,10.0.0.3,5002,True,29.321,41,1398.333,
+recovery,4,Server1,10.0.0.2,5001,True,27.802,41,1474.711,
+recovery,4,Server2,10.0.0.3,5002,True,28.465,41,1440.387,
+recovery,5,Server1,10.0.0.2,5001,True,29.149,41,1406.553,
+recovery,5,Server2,10.0.0.3,5002,True,29.764,41,1377.517,
